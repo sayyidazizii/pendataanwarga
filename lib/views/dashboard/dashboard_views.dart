@@ -1,8 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pendataanwarga/views/dashboard/beranda_panel.dart';
+import 'package:pendataanwarga/views/dashboard/berita_panel.dart';
+import 'package:pendataanwarga/views/dashboard/pengaturan_panel.dart';
 
-class DashboardViews extends StatelessWidget {
-  const DashboardViews({super.key});
+class DashboardViews extends StatefulWidget {
+  const DashboardViews({Key? key}) : super(key: key);
+
+  @override
+  _DashboardViewsState createState() => _DashboardViewsState();
+}
+
+class _DashboardViewsState extends State<DashboardViews> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index, BuildContext context) {
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => BerandaPanel()));
+        break;
+      case 1:
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => BeritaPanel()));
+        break;
+      case 2:
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => PengaturanPanel()));
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +43,13 @@ class DashboardViews extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.wrench), label: 'Pengaturan'),
         ],
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          _onItemTapped(index, context);
+        },
       ),
       body: Stack(
         children: [
